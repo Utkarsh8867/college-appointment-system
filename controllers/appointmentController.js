@@ -7,9 +7,14 @@ exports.bookAppointment = async (req, res) => {
   try {
     // Check if professor is available at this time
     const availability = await Availability.findOne({ professor: professorId });
-    if (!availability || !availability.slots.includes(time)) {
-      return res.status(400).json({ msg: "Slot not available" });
-    }
+    // if (!availability || !availability.slots.includes(time)) {
+    //   return res.status(400).json({ msg: "Slot not available" });
+    // }
+
+    if (!availability.slots.some(slot => new Date(slot).toISOString() === new Date(time).toISOString())) {
+  return res.status(400).json({ msg: "Slot not available" });
+}
+
 
     // Create appointment
     const appointment = new Appointment({

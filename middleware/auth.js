@@ -16,3 +16,18 @@ module.exports = async function (req, res, next) {
     res.status(400).send("Invalid Token");
   }
 };
+
+
+// exports.isAdmin = (req, res, next) => {
+//   if (req.user && req.user.role === 'admin') {
+//     next(); // allow to proceed
+//   } else {
+//     return res.status(403).json({ msg: 'Access denied: Admins only' });
+//   }
+// };
+
+
+// const jwt = require('jsonwebtoken');
+
+
+
