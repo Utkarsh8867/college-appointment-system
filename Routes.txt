@@ -1,0 +1,18 @@
+Routes
+
+ AUTH-routes
+POST - localhost:5000/api/auth/register
+POST - localhost:5000/api/auth/login
+GET  - localhost:5000/api/auth/hello
+
+AVAILABITIES-routes
+POST - localhost:5000/api/auth/set
+GET  - localhost:5000/api/auth/:professorId
+
+APPOINTMENT-routes
+POST   - localhost:5000/api/auth/book
+DELETE - localhost:5000/api/auth/:id
+GET    - localhost:5000/api/auth/myappointment
+
+
+
