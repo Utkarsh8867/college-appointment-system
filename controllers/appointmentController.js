@@ -5,18 +5,16 @@ exports.bookAppointment = async (req, res) => {
   const { professorId, time } = req.body;
 
   try {
-    // Check if professor is available at this time
+   
     const availability = await Availability.findOne({ professor: professorId });
-    // if (!availability || !availability.slots.includes(time)) {
-    //   return res.status(400).json({ msg: "Slot not available" });
-    // }
+  
 
-    if (!availability.slots.some(slot => new Date(slot).toISOString() === new Date(time).toISOString())) {
-  return res.status(400).json({ msg: "Slot not available" });
-}
+       if (!availability.slots.some(slot => new Date(slot).toISOString() === new Date(time).toISOString())) {
+            return res.status(400).json({ msg: "Slot not available" });
+          
+          }
 
-
-    // Create appointment
+    
     const appointment = new Appointment({
       student: req.user.id,
       professor: professorId,
@@ -24,7 +22,7 @@ exports.bookAppointment = async (req, res) => {
     });
     await appointment.save();
 
-    // Remove slot from availability
+  
     availability.slots = availability.slots.filter(slot => slot !== time);
     await availability.save();
 
@@ -40,7 +38,7 @@ exports.cancelAppointment = async (req, res) => {
 
     if (!appointment) return res.status(404).json({ msg: "Appointment not found" });
 
-    // Only professor can cancel
+    
     if (appointment.professor.toString() !== req.user.id) {
       return res.status(403).json({ msg: "Not authorized" });
     }
@@ -48,7 +46,7 @@ exports.cancelAppointment = async (req, res) => {
     appointment.status = "cancelled";
     await appointment.save();
 
-    // Restore slot in availability
+   
     const availability = await Availability.findOne({ professor: req.user.id });
     if (availability) {
       availability.slots.push(appointment.time);

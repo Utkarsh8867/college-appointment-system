@@ -41,7 +41,7 @@ exports.login = async (req, res) => {
   }
 };
 
-// Simple test route
+
 exports.sayHello = (req, res) => {
   res.json({ message: "Hello, Utkarsh! API is working." });
 };
